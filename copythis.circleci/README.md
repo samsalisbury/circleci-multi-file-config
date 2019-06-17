@@ -1,4 +1,4 @@
-# CircleCI configurator
+# How to use CircleCI multi-file config
 
 The Makefile in this directory generates the `./config.yml`
 in CircleCI 2.0 syntax,
