@@ -19,8 +19,8 @@ from the yml file tree in `.circleci/config/` in 2.0 or 2.1 syntax.
 │   ├── .gitignore           # This file tells git to ignore temp files.
 │   ├── Makefile             # This is the main file defining the workflow.
 │   ├── README.md            # The usage README. You should copy this into your .circleci dir too!
+│   ├── pre-commit           # Git pre-commit hook. Highly recommended to use this.
 │   └── config.make.sample   # It's slightly configurable! (Probably needless complexity.)
-└── pre-commit               # Git pre-commit hook. Very highly recommended to use this.
 ```
 
 ## Installation
