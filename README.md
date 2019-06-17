@@ -19,7 +19,7 @@ from the yml file tree in `.circleci/config/` in 2.0 or 2.1 syntax.
 │   ├── .gitignore           # This file tells git to ignore temp files.
 │   ├── Makefile             # This is the main file defining the workflow.
 │   ├── README.md            # The usage README. You should copy this into your .circleci dir too!
-│   └── config.make.sample   # It's slightly configurable! (This is needless complexity.)
+│   └── config.make.sample   # It's slightly configurable! (Probably needless complexity.)
 └── pre-commit               # Git pre-commit hook. Very highly recommended to use this.
 ```
 
@@ -36,11 +36,11 @@ even if you already have a `.circleci/config.yml`
 and you can begin breaking up the config into separate
 files under the `.circleci/config` directory, as you see fit.
 
-This is all supported by the circleci-cli tool, but the Makefile and git hook
-make it much more convenient to use.
+This is all supported by the circleci-cli tool anyway,
+but the Makefile and git hook make it much more convenient to use.
 
-[generating a single config file from many]: https://circleci.com/docs/2.0/local-cli/#packing-a-config
-[expanding 2.1 syntax to 2.0 syntax]: https://circleci.com/docs/2.0/local-cli/#processing-a-config
+Much more detail on usage and syntax in the [usage README].
+
 [usage README]: copythis.circleci/README.md
 
 
