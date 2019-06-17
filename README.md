@@ -36,13 +36,13 @@ files under the `.circleci/config` directory, as you see fit.
 This is all supported by the circleci-cli tool anyway,
 but the Makefile and git hook make it much more convenient to use.
 
-### Usage
+## Usage
 
 **Please see the [Usage README]!**
 
 [usage README]: copythis.circleci/README.md
 
-### What does each file do?
+## What does each file do?
 
 ```
 ├── README.md                # This file.
