@@ -1,4 +1,4 @@
-# CircleCI mutlti-file config
+# CircleCI multi-file config
 
 A sane workflow for managing large circleci configurations.
 
@@ -23,7 +23,7 @@ from the yml file tree in `.circleci/config/` in 2.0 or 2.1 syntax.
 └── pre-commit               # Git pre-commit hook. Very highly recommended to use this.
 ```
 
-## *Installation
+## Installation
 
 Copy everything (including dotfiles) in `copythis.circleci` to your own project's
 `.circleci` directory. Copy the git `pre-commit` hook file to that
