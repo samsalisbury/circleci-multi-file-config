@@ -1,5 +1,5 @@
-SHELL := /usr/bin/env bash
-.SHELLFLAGS := -euo pipefail
+SHELL       := /usr/bin/env bash
+.SHELLFLAGS := -euo pipefail -c
 
 # If there is a config file, include it.
 # Otherwise, sensible defaults apply.

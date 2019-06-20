@@ -7,7 +7,7 @@ workflows:
 
 executors:
   default:
-    shell: /usr/bin/env bash -euo pipefail
+    shell: /usr/bin/env bash -euo pipefail -c
     docker:
       - image: circleci/buildpack-deps
 

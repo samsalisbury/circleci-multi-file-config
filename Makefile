@@ -3,20 +3,14 @@
 # of the stuff in copythis.circleci.
 
 SHELL       := /usr/bin/env bash
-.SHELLFLAGS := -euo pipefail
-
-# Ensure the .tmp dir always exists.
-$(shell if [ ! -d ./.tmp ]; then mkdir -p ./.tmp; fi)
+.SHELLFLAGS := -euo pipefail -c
 
 # TD is the test directory. It should be in .gitignore.
 TD       := .tmp/test
 TESTMAKE := make -C $(TD)
 
 define TESTSETUP
-	set -x
-	whoami
-	ls -lah .
-	if [ -d $(TD) ]; then rm -rf $(TD); fi
+	[ ! -d $(TD) ] || rm -r $(TD)
 	mkdir -p $(TD)
 	cp copythis.circleci/Makefile $(TD)/
 endef
@@ -29,3 +23,7 @@ test:
 	$(TESTMAKE) init
 	$(TESTMAKE) ci-config
 	$(TESTMAKE) ci-verify
+
+.PHONY: clean
+clean:
+	rm -r .tmp
