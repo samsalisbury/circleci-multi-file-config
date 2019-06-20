@@ -6,13 +6,16 @@ SHELL       := /usr/bin/env bash
 .SHELLFLAGS := -euo pipefail
 
 # Ensure the .tmp dir always exists.
-$(shell if [ ! -d .tmp ]; then mkdir -p .tmp; fi)
+$(shell if [ ! -d ./.tmp ]; then mkdir -p ./.tmp; fi)
 
 # TD is the test directory. It should be in .gitignore.
 TD       := .tmp/test
 TESTMAKE := make -C $(TD)
 
 define TESTSETUP
+	set -x
+	whoami
+	ls -lah .
 	if [ -d $(TD) ]; then rm -rf $(TD); fi
 	mkdir -p $(TD)
 	cp copythis.circleci/Makefile $(TD)/
