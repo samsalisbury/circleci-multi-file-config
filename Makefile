@@ -9,11 +9,17 @@ SHELL       := /usr/bin/env bash
 TD       := ".tmp/test"
 TESTMAKE := make -C $(TD)
 
+define TESTSETUP
+	[ ! -d $(TD) ] || rm -rf $(TD)
+	mkdir -p $(TD)
+	cp copythis.circleci/Makefile $(TD)/
+endef
+
 # For now, test just invokes ci-config and ci-verify
 # and checks they exit successfully.
 .PHONY: test
 test:
-	rm -rf $(TD); mkdir -p $(TD); cp copythis.circleci/Makefile $(TD)/
+	$(TESTSETUP)
 	$(TESTMAKE) init
 	$(TESTMAKE) ci-config
 	$(TESTMAKE) ci-verify
