@@ -3,7 +3,10 @@ version: 2.1
 workflows:
   test:
     jobs:
-      - test
+      - test_0_1_5652
+      - test_0_1_5607
+      - test_0_1_5581
+      - test_0_1_5575
 
 executors:
   default:
@@ -11,9 +14,11 @@ executors:
     docker:
       - image: circleci/buildpack-deps
 
-jobs:
+commands:
   test:
-    executor: default
+    parameters:
+      version:
+        type: string
     steps:
       - checkout
       - run:
@@ -27,8 +32,19 @@ jobs:
             tree || true
             ls -lah
             env | grep -vE '(SECRET|KEY|ACCESS|TOKEN|PASS|PWD)'
-      - run:
-          name: test
-          command: |
-            make test
+      - run: CCI_VERSION=<<parameters.version>> make get-circleci-cli
+      - run: CCI_VERSION=<<parameters.version>> make test
 
+jobs:
+  test_0_1_5652:
+    executor: default
+    steps: [ test: {version: 0.1.5652} ] 
+  test_0_1_5607:
+    executor: default
+    steps: [ test: {version: 0.1.5607} ] 
+  test_0_1_5581:
+    executor: default
+    steps: [ test: {version: 0.1.5581} ] 
+  test_0_1_5575:
+    executor: default
+    steps: [ test: {version: 0.1.5575} ] 
