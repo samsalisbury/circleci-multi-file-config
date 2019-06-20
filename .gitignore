@@ -1,2 +1,3 @@
 copythis.circleci/config/
 copythis.circleci/config.yml
+.tmp/
