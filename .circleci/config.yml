@@ -27,7 +27,6 @@ jobs:
             tree || true
             ls -lah
             env | grep -vE '(SECRET|KEY|ACCESS|TOKEN|PASS|PWD)'
-
       - run:
           name: test
           command: |
