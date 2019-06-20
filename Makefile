@@ -25,7 +25,7 @@ get-circleci-cli: $(CCI)
 
 $(CCI):
 	mkdir -p $(CCI_DIR)
-	cd $(CCI_DIR) && wget $(CCI_URL) && tar xfv $(CCI_ARCHIVE) && chmod +x $@
+	cd $(CCI_DIR) && wget $(CCI_URL) && tar xfv $(CCI_ARCHIVE)
 
 # TD is the test directory. It should be in .gitignore.
 TD       := .tmp/test
