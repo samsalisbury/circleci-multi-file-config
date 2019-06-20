@@ -1,4 +1,6 @@
-# CircleCI multi-file config
+[![CircleCI](https://circleci.com/gh/samsalisbury/circleci-multi-file-config.svg?style=svg)](https://circleci.com/gh/samsalisbury/circleci-multi-file-config)
+
+# CircleCI Multi-File Config
 
 A sane workflow for managing large circleci configurations.
 
