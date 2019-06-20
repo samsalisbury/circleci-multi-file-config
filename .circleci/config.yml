@@ -7,6 +7,7 @@ workflows:
 
 executors:
   default:
+    shell: /usr/bin/env bash -euo pipefail
     docker:
       - image: circleci/buildpack-deps
 
@@ -16,6 +17,18 @@ jobs:
     steps:
       - checkout
       - run:
+          name: diagnostics
+          command: |
+            set -x
+            make --version || true
+            git --version || true
+            pwd || true
+            tree || true
+            ls -lah
+            env | grep -vE '(SECRET|KEY|ACCESS|TOKEN|PASS|PWD)'
+
+      - run:
+          name: test
           command: |
             make test
 
