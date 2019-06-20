@@ -5,8 +5,11 @@
 SHELL       := /usr/bin/env bash
 .SHELLFLAGS := -euo pipefail
 
+# Ensure the .tmp dir always exists.
+$(shell [ -d .tmp ] || mkdir -p .tmp)
+
 # TD is the test directory. It should be in .gitignore.
-TD       := ".tmp/test"
+TD       := .tmp/test
 TESTMAKE := make -C $(TD)
 
 define TESTSETUP
