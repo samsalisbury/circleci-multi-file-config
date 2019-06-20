@@ -1,0 +1,20 @@
+version: 2.1
+
+workflows:
+  test:
+    jobs:
+      - test
+
+executors:
+  default:
+    docker:
+      - image: circleci/buildpack-deps
+
+jobs:
+  test:
+    executor: default
+    steps:
+      - run:
+          command: |
+            make test
+
