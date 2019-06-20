@@ -29,12 +29,15 @@ $(CCI):
 
 # TD is the test directory. It should be in .gitignore.
 TD       := .tmp/test
-TESTMAKE := export PATH=$(CCI_PATH):$(PATH) && echo "CircleCI CLI v$$(circleci version)" && make -C $(TD)
+TESTMAKE = @export PATH=$(CCI_PATH):$(PATH) && \
+	echo "==> make $(1)" && \
+	make -C $(TD) $(1)
 
 define TESTSETUP
-	[ ! -d $(TD) ] || rm -r $(TD)
-	mkdir -p $(TD)
-	cp copythis.circleci/Makefile $(TD)/
+	@[ ! -d $(TD) ] || rm -r $(TD)
+	@mkdir -p $(TD)
+	@cp copythis.circleci/Makefile $(TD)/
+	@echo "===== Begin Tests: CircleCI CLI v$(CCI_VERSION)"
 endef
 
 # For now, test just invokes ci-config and ci-verify
@@ -42,9 +45,11 @@ endef
 .PHONY: test
 test: $(CCI)
 	$(TESTSETUP)
-	$(TESTMAKE) init
-	$(TESTMAKE) ci-config
-	$(TESTMAKE) ci-verify
+	$(call TESTMAKE,help)
+	$(call TESTMAKE,init)
+	$(call TESTMAKE,ci-config)
+	$(call TESTMAKE,ci-verify)
+	@echo OK - all tests passed
 
 .PHONY: clean
 clean:
