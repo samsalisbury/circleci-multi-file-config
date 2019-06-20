@@ -2,6 +2,9 @@
 # This Makefile is to help with maintenance and testing
 # of the stuff in copythis.circleci.
 
+SHELL       := /usr/bin/env bash
+.SHELLFLAGS := -euo pipefail
+
 # TD is the test directory. It should be in .gitignore.
 TD       := ".tmp/test"
 TESTMAKE := make -C $(TD)

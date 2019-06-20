@@ -1,4 +1,4 @@
-SHELL ?= /usr/bin/env bash
+SHELL := /usr/bin/env bash
 .SHELLFLAGS := -euo pipefail
 
 # If there is a config file, include it.
