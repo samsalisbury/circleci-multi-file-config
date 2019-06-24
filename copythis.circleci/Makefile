@@ -1,17 +1,13 @@
 SHELL       := /usr/bin/env bash
 .SHELLFLAGS := -euo pipefail -c
 
-# If there is a config file, include it.
-# Otherwise, sensible defaults apply.
--include config.make
-
 # Setup aliases for the main targets.
 # We use aliases so that help text can reliably refer to these targets,
 # and so that they can be overridden on a per-project basis to avoid
 # conflicts etc.
 #
 # It is always recommended to use the same aliases for these targets
-# in your top-level Makefile as well, so you can run the same make
+# in your top-level Makefile as well, if using so you can run the same make
 # command from either directory.
 
 # CONFIG_ALIAS is the name of the make target someone

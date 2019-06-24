@@ -1,4 +1,0 @@
-# Optionally configure the workflow by changing the variables below.
-SOURCE_DIR   := config     # defaults to config
-CONFIG_ALIAS := ci-config  # defaults to ci-config
-VERIFY_ALIAS := ci-verify  # defaults to ci-verify
