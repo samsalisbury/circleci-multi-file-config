@@ -3,6 +3,7 @@ version: 2.1
 workflows:
   test:
     jobs:
+      - test_0_1_5691
       - test_0_1_5652
       - test_0_1_5607
       - test_0_1_5581
@@ -36,6 +37,9 @@ commands:
       - run: CCI_VERSION=<<parameters.version>> make test
 
 jobs:
+  test_0_1_5691:
+    executor: default
+    steps: [ test: {version: 0.1.5691} ] 
   test_0_1_5652:
     executor: default
     steps: [ test: {version: 0.1.5652} ] 
