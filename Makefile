@@ -2,8 +2,9 @@
 # This Makefile is to help with maintenance and testing
 # of the stuff in copythis.circleci.
 
-SHELL       := /usr/bin/env bash
-.SHELLFLAGS := -euo pipefail -c
+# Set SHELL to 'strict mode' without using .SHELLFLAGS for max compatibility.
+# See https://fieldnotes.tech/how-to-shell-for-compatible-makefiles/
+SHELL := /usr/bin/env bash -euo pipefail -c
 
 CCI_VERSION ?= 0.1.5652
 

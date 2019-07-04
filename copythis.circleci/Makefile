@@ -1,5 +1,6 @@
-SHELL       := /usr/bin/env bash
-.SHELLFLAGS := -euo pipefail -c
+# Set SHELL to 'strict mode' without using .SHELLFLAGS for max compatibility.
+# See https://fieldnotes.tech/how-to-shell-for-compatible-makefiles/
+SHELL := /usr/bin/env bash -euo pipefail -c
 
 # CONFIG is the name of the make target someone
 # would invoke to update the main config file (config.yml).
