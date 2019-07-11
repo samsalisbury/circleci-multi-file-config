@@ -30,9 +30,8 @@ project's `.git/hooks` directory, so you don't shoot yourself in the foot.
 
 Once that is done, see the [usage README] in that directory.
 
-It is usually safe to perform this installation
-even if you already have a `.circleci/config.yml`
-and you can begin breaking up the config into separate
+If you already have a `.circleci/config.yml` simply rename it to `@config.yml`
+and then run `make ci-config`. You can begin breaking up the `@config.yml` into separate
 files under the `.circleci/config` directory, as you see fit.
 
 This is all supported by the circleci-cli tool anyway,
@@ -53,6 +52,5 @@ but the Makefile and git hook make it much more convenient to use.
 │   ├── .gitignore           # This file tells git to ignore temp files.
 │   ├── Makefile             # This is the main file defining the workflow.
 │   ├── README.md            # The usage README. You should copy this into your .circleci dir too!
-│   ├── pre-commit           # Git pre-commit hook. Highly recommended to use this.
-│   └── config.make.sample   # It's slightly configurable! (Probably needless complexity.)
+│   └── pre-commit           # Git pre-commit hook. Highly recommended to use this.
 ```
