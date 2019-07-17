@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# CircleCI CLI Multi-File-Config installer script.
+#
+# WARNING: This is a very rough implementation, and is still work in progress.
+# This script will modify files in the target repo, use at your own risk.
+#
+# This installer copies the relevant files from copythis.circleci to the
+# target repo, and attempts to install the git pre-commit hook if there is
+# no pre-commit hook already in the repo.
+
+TARGET="$1"
+
+set -euo pipefail
+
+log() { echo "==> $1" 1>&2; }
+die() { log "FATAL: $1"; exit 1; }
+
+SRC="$PWD"
+export SRC
+
+[ -d "$SRC/copythis.circleci" ] || die "./copythis.circleci dir not found."
+SRC=$SRC/copythis.circleci
+[ -n "$TARGET" ] || die "TARGET not set."
+[ -d "$TARGET" ] || die "TARGET not a directory ($TARGET)"
+
+# Strip trailing / and /.circleci[/]
+TARGET="${TARGET%/}"
+TARGET="${TARGET%/.circleci}"
+
+log "Installing to repo rooted at $TARGET"
+
+(
+  cd "$TARGET"
+  mkdir -p .circleci/config
+  [ ! -f .circleci/config.yml ] || {
+    log "Moving $TARGET/.circleci/config.yml -> $TARGET/.circleci/config/@config.yml"
+    mv .circleci/config.yml .circleci/config/@config.yml
+    make -C .circleci ci-config
+  }
+  cd .circleci
+  cp "$SRC"/{Makefile,.gitattributes,.gitignore,README.md} ./
+  cd ..
+  [ ! -d .git ] || {
+    mkdir -p .git/hooks
+    cd .git/hooks
+    if [ -f pre-commit ]; then
+      log "$TARGET/.git/hooks/pre-commit already exists, please install hook manually"
+    else
+      log "Installing git pre-commit hook to $TARGET/.git/hooks/"
+      cp "$SRC/pre-commit" ./
+    fi
+  }  
+)
