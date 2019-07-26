@@ -1,16 +1,43 @@
 # How to use CircleCI multi-file config
 
-The Makefile in this directory generates the `./config.yml`
-in CircleCI 2.0 syntax,
-from the tree rooted at `./config/`,
-which contains files in CircleCI 2.1 syntax.
+This README and the Makefile should be in your `.circleci` directory,
+in the root of your repository.
+All path references in this README assume we are in this `.circleci` directory.
+
+The `Makefile` in this directory generates `./config.yml` in CircleCI 2.0 syntax,
+from the tree rooted at `./config/`, which contains files in CircleCI 2.0 or 2.1 syntax.
+
+
+## Quickstart
+
+The basic workflow is:
+
+- Edit source files in `./config/`
+- When you are done, run `make ci-config` to update `./config.yml`
+- Commit this entire `.circleci` directory, including that generated file together.
+- Run `make ci-verify` to ensure the current `./config.yml` is up to date with the source.
+
+When merging this `.circleci` directory:
+
+- Do not merge the generated `./config.yml` file, instead:
+- Merge the source files under `./config/`, and then
+- Run `make ci-config` to re-generate the merged `./config.yml`
+
+And that's it, for more detail, read on!
+
+
+## How does it work, roughly?
+
 CircleCI supports [generating a single config file from many],
 using the `$ circleci config pack` command.
 It also supports [expanding 2.1 syntax to 2.0 syntax]
 using the `$ circleci config process` command.
+We use these two commands, stitched together using the `Makefile`
+to implement the workflow.
 
 [generating a single config file from many]: https://circleci.com/docs/2.0/local-cli/#packing-a-config
 [expanding 2.1 syntax to 2.0 syntax]: https://circleci.com/docs/2.0/local-cli/#processing-a-config
+
 
 ## Prerequisites
 
@@ -25,6 +52,7 @@ $ circleci version
 
 [CircleCI CLI tool]: https://circleci.com/docs/2.0/local-cli/
 [download this tool directly from GitHub Releases]: https://github.com/CircleCI-Public/circleci-cli/releases
+
 
 ## Updating the config source
 
@@ -45,12 +73,14 @@ next time `make ci-config` is run.
 
 [Syntax and layout]: #syntax-and-layout
 
+
 ### Verifying `./config.yml`
 
 To check whether or not the current `./config.yml` is up to date with the source
 and valid, run `$ make ci-verify`.
 Note that `$ make ci-verify` should be run in CI,
 in case not everyone has the git pre-commit hook set up correctly.
+
 
 #### Example shell session
 
@@ -63,6 +93,7 @@ Changes detected in .circleci/, running 'make -C .circleci ci-verify'
 --> Generated config.yml is up to date!
 --> Config file at config.yml is valid.
 ```
+
 
 ### Syntax and layout
 
@@ -97,11 +128,3 @@ should be at the top-level, rather than underneath a key named after their filen
 This naming convention is unfortunate as it breaks autocompletion in bash,
 but there we go.
 
-### Why not just use YAML references?
-
-YAML references only work within a single file,
-this is because `circleci config pack` is not a text-level packer,
-but rather stitches together the structures defined in each YAML
-file according to certain rules.
-Therefore it must parse each file separately,
-and YAML references are handled by the parser.
