@@ -16,12 +16,17 @@ set -euo pipefail
 log() { echo "==> $1" 1>&2; }
 die() { log "FATAL: $1"; exit 1; }
 
+usage() {
+  echo "usage: $(basename "$0") <target dir>";
+  exit 1
+}
+
 SRC="$PWD"
 export SRC
 
 [ -d "$SRC/copythis.circleci" ] || die "./copythis.circleci dir not found."
 SRC=$SRC/copythis.circleci
-[ -n "$TARGET" ] || die "TARGET not set."
+[ -n "$TARGET" ] || usage
 [ -d "$TARGET" ] || die "TARGET not a directory ($TARGET)"
 
 # Strip trailing / and /.circleci[/]
@@ -33,19 +38,26 @@ log "Installing to repo rooted at $TARGET"
 (
   cd "$TARGET"
   mkdir -p .circleci/config
-  [ ! -f .circleci/config.yml ] || {
-    log "Moving $TARGET/.circleci/config.yml -> $TARGET/.circleci/config/@config.yml"
-    mv .circleci/config.yml .circleci/config/@config.yml
-    make -C .circleci ci-config
-  }
+  (
+    [ ! -f .circleci/config.yml ] || {
+      [ ! -f .circleci/config/@config.yml ] || {
+        log "Existing config detected: not modifying."
+        exit 0 # Exit from this subshell.
+      }
+      log "Moving $TARGET/.circleci/config.yml -> $TARGET/.circleci/config/@config.yml"
+      mv .circleci/config.yml .circleci/config/@config.yml
+      make -C .circleci ci-config
+    }
+  )
   cd .circleci
+  log "Copying Makefile, .gitattributes, .gitignore and README.md"
   cp "$SRC"/{Makefile,.gitattributes,.gitignore,README.md} ./
   cd ..
   [ ! -d .git ] || {
     mkdir -p .git/hooks
     cd .git/hooks
     if [ -f pre-commit ]; then
-      log "$TARGET/.git/hooks/pre-commit already exists, please install hook manually"
+      log ".git/hooks/pre-commit already exists, please install hook manually"
     else
       log "Installing git pre-commit hook to $TARGET/.git/hooks/"
       cp "$SRC/pre-commit" ./
