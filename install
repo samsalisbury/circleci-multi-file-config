@@ -52,6 +52,8 @@ log "Installing to repo rooted at $TARGET"
   cd .circleci
   log "Copying Makefile, .gitattributes, .gitignore and README.md"
   cp "$SRC"/{Makefile,.gitattributes,.gitignore,README.md} ./
+  # Re-gen the config now in case it needs to change due to updated Makefile.
+  make ci-config
   cd ..
   [ ! -d .git ] || {
     mkdir -p .git/hooks
