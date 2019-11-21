@@ -79,7 +79,7 @@ $(TMP): $(CONFIG_SOURCE)
 
 .PHONY: config-up-to-date
 config-up-to-date: $(TMP) # Note this must not depend on $(OUT)!
-	@if diff config.yml $<; then \
+	@if diff -w $(OUT) $<; then \
 		echo "Generated $(OUT) is up to date!"; \
 	else \
 		echo "Generated $(OUT) is out of date, run make $(CONFIG) to update."; \
