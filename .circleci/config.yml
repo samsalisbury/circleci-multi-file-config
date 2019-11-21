@@ -3,6 +3,7 @@ version: 2.1
 workflows:
   test:
     jobs:
+      - test_0_1_5879
       - test_0_1_5691
       - test_0_1_5652
       - test_0_1_5607
@@ -35,20 +36,22 @@ commands:
             env | grep -vE '(SECRET|KEY|ACCESS|TOKEN|PASS|PWD)'
       - run: CCI_VERSION=<<parameters.version>> make get-circleci-cli
       - run: CCI_VERSION=<<parameters.version>> make test
-
 jobs:
+  test_0_1_5879:
+    executor: default
+    steps: [ test: {version: 0.1.5879} ]
   test_0_1_5691:
     executor: default
-    steps: [ test: {version: 0.1.5691} ] 
+    steps: [ test: {version: 0.1.5691} ]
   test_0_1_5652:
     executor: default
-    steps: [ test: {version: 0.1.5652} ] 
+    steps: [ test: {version: 0.1.5652} ]
   test_0_1_5607:
     executor: default
-    steps: [ test: {version: 0.1.5607} ] 
+    steps: [ test: {version: 0.1.5607} ]
   test_0_1_5581:
     executor: default
-    steps: [ test: {version: 0.1.5581} ] 
+    steps: [ test: {version: 0.1.5581} ]
   test_0_1_5575:
     executor: default
-    steps: [ test: {version: 0.1.5575} ] 
+    steps: [ test: {version: 0.1.5575} ]

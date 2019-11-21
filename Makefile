@@ -8,7 +8,7 @@ SHELL := /usr/bin/env bash -euo pipefail -c
 
 # CCI_VERSION is the CircleCI CLI Version; this env var can be overridden
 # to test this against different versions of the CLI.
-CCI_VERSION ?= 0.1.5652
+CCI_VERSION ?= 0.1.5879
 
 ifeq ($(shell uname),Darwin)
 CCI_OS_ARCH := darwin_amd64
@@ -47,26 +47,29 @@ define TESTSETUP
 	@mkdir -p $(TD)
 	@cp copythis.circleci/Makefile $(TD)/
 	@echo "==> Begin Tests: CircleCI CLI v$(CCI_VERSION)"
-	@# Call make init-simple-source from this file to dump some elementary
+	@# Call make init from this file to dump some elementary
 	@# config into the test directory ready for the test to operate on.
 	@SOURCE_DIR=config $(MAKE) -C $(TD) -f $(CURDIR)/Makefile init
 endef
 
+.PHONY: test
+test: test-happy-path
+	@echo OK - all tests passed
+
 # For now, test just invokes ci-config and ci-verify against the simple config
 # defined by make init, and checks they exit successfully.
-.PHONY: test
-test: $(CCI)
+.PHONY: test-happy-path
+test-happy-path: $(CCI)
 	$(TESTSETUP)
 	$(call TESTMAKE,help)
 	$(call TESTMAKE,ci-config)
 	$(call TESTMAKE,ci-verify)
 	@echo "==> Compiled config.yml:"
 	@cat $(TD)/config.yml
-	@echo OK - all tests passed
 
 CONFIG_ROOT := $(SOURCE_DIR)/@$(SOURCE_DIR).yml
 
-.PHONY: init-simple-source
+.PHONY: init
 init: ## init creates just enough to allow make ci-config to run without error.
 	@[ ! -d $(SOURCE_DIR) ] || { echo "Source directory $(SOURCE_DIR)/ already exists."; exit 1; }
 	@mkdir -p $(SOURCE_DIR) $(SOURCE_DIR)/{jobs,commands,workflows}
