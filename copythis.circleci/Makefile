@@ -10,6 +10,9 @@ CONFIG ?= ci-config
 VERIFY ?= ci-verify
 
 CIRCLECI := circleci --skip-update-check
+ifeq ($(DEBUG_CIRCLECI_CLI),YES)
+CIRCLECI += --debug
+endif
 
 # Set up some documentation/help message variables.
 # We do not attempt to install the CircleCI CLI from this Makefile.
