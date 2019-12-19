@@ -14,6 +14,11 @@ ifeq ($(DEBUG_CIRCLECI_CLI),YES)
 CIRCLECI += --debug
 endif
 
+# For config processing, always refer to circleci.com not self-hosted circleci,
+# because self-hosted does not currently support the necessary API.
+CIRCLECI_CLI_HOST := https://circleci.com
+export CIRCLECI_CLI_HOST
+
 # Set up some documentation/help message variables.
 # We do not attempt to install the CircleCI CLI from this Makefile.
 CCI_INSTALL_LINK := https://circleci.com/docs/2.0/local-cli/\#installation
