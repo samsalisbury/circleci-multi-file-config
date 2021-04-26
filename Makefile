@@ -8,7 +8,7 @@ SHELL := /usr/bin/env bash -euo pipefail -c
 
 # CCI_VERSION is the CircleCI CLI Version; this env var can be overridden
 # to test this against different versions of the CLI.
-CCI_VERSION ?= 0.1.5879
+CCI_VERSION ?= 0.1.15195
 
 ifeq ($(shell uname),Darwin)
 CCI_OS_ARCH := darwin_amd64
